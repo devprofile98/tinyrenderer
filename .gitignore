@@ -1,0 +1,7 @@
+/target
+*.data
+*.tga
+!wireframe.tga
+*.old
+cube.obj
+.vscode
