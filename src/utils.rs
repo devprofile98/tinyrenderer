@@ -13,14 +13,20 @@ pub struct Vec3 {
     pub z: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct point {
     pub x: u16,
     pub y: u16,
 }
 
-pub fn draw_line(image: &mut TargaImage, mut p1: point, mut p2: point, color: &Color) {
+pub fn draw_line(
+    image: &mut TargaImage,
+    mut p1: point,
+    mut p2: point,
+    color: &Color,
+) -> Vec<point> {
     let mut steep = false;
+    let mut all_y = Vec::new();
     if (p2.x as i32 - p1.x as i32).abs() < (p2.y as i32 - p1.y as i32).abs() {
         swap(&mut p1.x, &mut p1.y);
         swap(&mut p2.x, &mut p2.y);
@@ -35,12 +41,14 @@ pub fn draw_line(image: &mut TargaImage, mut p1: point, mut p2: point, color: &C
         let t = (x - p1.x) as f32 / dx;
         let y = (p1.y as f32 * (1.0f32 - t) + p2.y as f32 * t) as u16;
         // println!("the point is : [{},{}]", x,y);
+        all_y.push(point { x: x, y: y });
         if steep {
             image.set_pixel(x, y, color);
         } else {
             image.set_pixel(y, x, color);
         }
     }
+    all_y
 }
 
 pub struct Model {
