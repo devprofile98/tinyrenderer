@@ -1,4 +1,4 @@
-use super::utils::{draw_line, load_obj, point};
+use crate::utils::{draw_line, math::Vec2, model::Model};
 use tgars::{Color, TargaImage};
 
 pub fn draw(model_path: &str) {
@@ -7,15 +7,15 @@ pub fn draw(model_path: &str) {
     let blue: Color = Color::rgb(0, 0, 255);
     let mut image = TargaImage::new(1024, 1024);
 
-    let model = load_obj(model_path);
+    let model = Model::load(model_path);
     for f in &model.faces {
         draw_line(
             &mut image,
-            point {
+            Vec2 {
                 x: ((model.vertices[f.y as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.y as usize].y) * 1023.0) as u16,
             },
-            point {
+            Vec2 {
                 x: ((model.vertices[f.x as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.x as usize].y) * 1023.0) as u16,
             },
@@ -23,11 +23,11 @@ pub fn draw(model_path: &str) {
         );
         draw_line(
             &mut image,
-            point {
+            Vec2 {
                 x: ((model.vertices[f.z as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.z as usize].y) * 1023.0) as u16,
             },
-            point {
+            Vec2 {
                 x: ((model.vertices[f.y as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.y as usize].y) * 1023.0) as u16,
             },
@@ -35,11 +35,11 @@ pub fn draw(model_path: &str) {
         );
         draw_line(
             &mut image,
-            point {
+            Vec2 {
                 x: ((model.vertices[f.x as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.x as usize].y) * 1023.0) as u16,
             },
-            point {
+            Vec2 {
                 x: ((model.vertices[f.z as usize].x) * 1023.0) as u16,
                 y: ((model.vertices[f.z as usize].y) * 1023.0) as u16,
             },
