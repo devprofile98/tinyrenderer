@@ -8,7 +8,7 @@ pub fn draw(model_path: &str) {
     let mut image = TargaImage::new(1024, 1024);
 
     let model = Model::load(model_path);
-    for f in &model.faces {
+    for f in &model.faces.polys {
         draw_line(
             &mut image,
             Vec2 {
